@@ -4,9 +4,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-add_lunch_combo omni_J706F-eng
-add_lunch_combo omni_J706F-userdebug
-
 # OrangeFox build vars (fox_12.1)
 export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 export FOX_AB_DEVICE=1
