@@ -1,0 +1,197 @@
+DEVICE_PATH := device/lenovo/J706F
+
+# Kernel
+TARGET_KERNEL_SOURCE := kernel/lenovo/J706F
+TARGET_KERNEL_CONFIG := vendor/pearl_row_wifi-perf_defconfig
+# 또는 실제 defconfig 파일 이름 확인 후:
+# TARGET_KERNEL_CONFIG := tb-j706f_defconfig
+
+# Architecture
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := cortex-a76
+
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv8-a
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := cortex-a73
+TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
+
+# Enable CPUSets
+ENABLE_CPUSETS := true
+ENABLE_SCHEDBOOST := true
+
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := sm7150
+TARGET_NO_BOOTLOADER := true
+TARGET_USES_UEFI := true
+
+# Platform
+TARGET_BOARD_PLATFORM := sm7150
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno618
+
+# Kernel
+BOARD_KERNEL_CMDLINE := \
+            androidboot.hardware=qcom \
+            androidboot.memcg=1 \
+            lpm_levels.sleep_disabled=1 \
+            msm_rtb.filter=0x237 \
+            service_locator.enable=1 \
+            swiotlb=1 \
+            androidboot.usbcontroller=a600000.dwc3 \
+            loop.max_part=7 \
+            cgroup.memory=nokmem,nosocket \
+            androidboot.boot_devices=soc/1d84000.ufshc \
+            buildvariant=eng
+
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_BOOTIMG_HEADER_VERSION := 2
+BOARD_CUSTOM_DTBOIMG_MK := $(DEVICE_PATH)/dtbo.mk
+
+
+BOARD_KERNEL_IMAGE_NAME := Image.gz
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_HEADER_VERSION := 2
+BOARD_KERNEL_BASE                 := 0x00000000
+BOARD_KERNEL_TAGS_OFFSET       := 0x00000100
+BOARD_KERNEL_OFFSET              := 0x00008000
+BOARD_KERNEL_SECOND_OFFSET    := 0x00f00000
+BOARD_RAMDISK_OFFSET             := 0x01000000
+BOARD_DTB_OFFSET                  := 0x01f00000
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz
+TARGET_KERNEL_ARCH := arm64
+BOARD_INCLUDE_RECOVERY_DTBO := true
+BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
+BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --second_offset $(BOARD_KERNEL_SECOND_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_KERNEL_HEADER_VERSION)
+
+# Platform
+TARGET_BOARD_PLATFORM := sm7150
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno618
+QCOM_BOARD_PLATFORMS += sm7150
+
+# Prebuilt Kernel (스톡 커널 사용)
+BOARD_KERNEL_IMAGE_NAME := Image.gz
+BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
+
+# Partitions
+BOARD_FLASH_BLOCK_SIZE := 262144
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_DTBOIMG_PARTITION_SIZE := 25165824
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 100663296
+BOARD_VENDORIMAGE_PARTITION_SIZE := 697745408
+BOARD_PRODUCTIMAGE_PARTITION_SIZE := 1073741824
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4632371200
+BOARD_SYSTEM_EXTIMAGE_PARTITION_SIZE := 1073741824
+BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_SYSTEM_EXT := system_ext
+
+# Dynamic Partitions
+BOARD_SUPER_PARTITION_SIZE := 12884901888
+BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 12884901888
+BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
+      system \
+      system_ext \
+      vendor \
+      product
+
+
+# A/B Device
+TARGET_NO_KERNEL := false
+TARGET_NO_RECOVERY := false
+BOARD_USES_RECOVERY_AS_BOOT := false
+
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    system \
+    system_ext \
+    vendor \
+    product \
+    vbmeta
+
+# AVB
+BOARD_AVB_ENABLE := true
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+
+# File systems Recovery
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_COPY_OUT_VENDOR := vendor
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# 16:10 Screen
+TARGET_SCREEN_WIDTH := 2560
+TARGET_SCREEN_HEIGHT := 1600
+
+# Workaround for error copying vendor files to recovery ramdisk
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_PRODUCT := product
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+
+# Use mke2fs to create ext4 images
+TARGET_USES_MKE2FS := true
+
+# Partitions (listed in the file) to be wiped under recovery.
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/root/system/etc/recovery.wipe
+
+# Crypto
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+BOARD_USES_METADATA_PARTITION := true
+
+
+# TWRP Configuration
+TW_THEME := portrait_hdpi
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_MAX_BRIGHTNESS := 2047
+TW_DEFAULT_BRIGHTNESS := 1200
+TW_SCREEN_BLANK_ON_BOOT := true
+RECOVERY_SDCARD_ON_DATA := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_INCLUDE_NTFS_3G := true
+TW_USE_TOOLBOX := true
+TW_NO_LEGACY_PROPS := true
+TW_NO_BIND_SYSTEM := true
+TW_HAS_EDL_MODE := true
+TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+
+# OrangeFox specific
+FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER := true
+OF_MAINTAINER := YourName
+OF_SCREEN_H := 2000
+OF_STATUS_H := 80
+OF_STATUS_INDENT_LEFT := 48
+OF_STATUS_INDENT_RIGHT := 48
+OF_HIDE_NOTCH := 1
+OF_CLOCK_POS := 1
+FOX_RECOVERY_INSTALL_PARTITION := /dev/block/bootdevice/by-name/recovery
+
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CLANG_VERSION := r530567
+
+TARGET_NO_BOOTIMAGE := false
+
+# Lineage/QCOM common configs
+BOARD_USES_QCOM_HARDWARE := true
+include vendor/lineage/config/BoardConfigLineage.mk
