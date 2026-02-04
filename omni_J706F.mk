@@ -10,8 +10,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 # Release name
 PRODUCT_RELEASE_NAME := J706F
 
-# Inherit from TWRP product configuration
-$(call inherit-product, vendor/twrp/config/common.mk)
+# Inherit from OrangeFox product configuration
+$(call inherit-product, vendor/recovery/config/common.mk)
 
 # Device identifier
 PRODUCT_DEVICE := J706F
