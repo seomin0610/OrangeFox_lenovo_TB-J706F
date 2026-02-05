@@ -1,5 +1,9 @@
 DTBO_PREBUILT := $(DEVICE_PATH)/prebuilt/dtbo.img
 
+# The build expects a DTBO object at this path for recovery packaging.
+DTBO_OBJ_DIR := $(PRODUCT_OUT)/obj/DTBO_OBJ/arch/arm64/boot
+BOARD_PREBUILT_DTBOIMAGE := $(DTBO_OBJ_DIR)/dtbo.img
+
 $(BOARD_PREBUILT_DTBOIMAGE): $(DTBO_PREBUILT)
 	@echo "Using prebuilt dtbo.img (trimmed)"
 	mkdir -p $(dir $@)
