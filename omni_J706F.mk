@@ -8,8 +8,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 # Release name
 PRODUCT_RELEASE_NAME := J706F
 
-# Inherit from OrangeFox product configuration
+# Inherit from OrangeFox product configuration (optional)
+ifneq (,$(wildcard vendor/recovery/config/common.mk))
 $(call inherit-product, vendor/recovery/config/common.mk)
+endif
 
 # Device identifier
 PRODUCT_DEVICE := J706F
