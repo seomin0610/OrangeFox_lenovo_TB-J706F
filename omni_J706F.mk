@@ -1,7 +1,5 @@
 # Inherit from J706F device
 $(call inherit-product, device/lenovo/J706F/device.mk)
-$(call inherit-product, vendor/omni/config/common.mk)
-
 # Inherit from common AOSP config
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
