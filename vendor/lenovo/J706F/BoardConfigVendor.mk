@@ -1,1 +1,0 @@
-# BoardConfig for vendor blobs
