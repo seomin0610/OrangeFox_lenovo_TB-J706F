@@ -8,10 +8,6 @@ $(call inherit-product, device/lenovo/J706F/device.mk)
 # GMS (product partition is too small for gapps)
 WITH_GMS := false
 
-# Inherit common tablet config + Evolution X bits
-$(call inherit-product, vendor/lineage/config/common_full_tablet_wifionly.mk)
-$(call inherit-product, vendor/lineage/config/evolution.mk)
-
 # Device identifier
 PRODUCT_NAME := evolution_J706F
 PRODUCT_DEVICE := J706F

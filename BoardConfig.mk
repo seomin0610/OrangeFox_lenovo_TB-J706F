@@ -183,4 +183,3 @@ TARGET_NO_BOOTIMAGE := false
 
 # Lineage/QCOM common configs
 BOARD_USES_QCOM_HARDWARE := true
-include vendor/lineage/config/BoardConfigLineage.mk
