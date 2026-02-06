@@ -81,7 +81,6 @@ QCOM_BOARD_PLATFORMS += sm7150
 
 # Prebuilt Kernel (스톡 커널 사용)
 BOARD_KERNEL_IMAGE_NAME := Image.gz
-BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
